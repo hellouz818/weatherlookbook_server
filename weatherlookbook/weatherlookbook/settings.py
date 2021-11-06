@@ -44,7 +44,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'crawlingapp',
     'accountapp',
+    'boardapp',
 ]
+
+AUTH_USER_MODEL = 'accountapp.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
