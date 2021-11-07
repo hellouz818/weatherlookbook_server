@@ -9,4 +9,5 @@ urlpatterns = [
     path('crawlingapp/', include('crawlingapp.urls')),
     path('accountapp/', include('accountapp.urls')),
     path('boardapp/', include('boardapp.urls')),
+    path('likeapp/', include('likeapp.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
