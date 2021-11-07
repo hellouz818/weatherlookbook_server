@@ -46,9 +46,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         default=timezone.now
     )
     
-    profile_image = models.ImageField(upload_to='Image/', null=True, blank=True)
-
-    #like_boards = models.ManyToManyField('Board', blank=True, related_name='like_users')
+    profile_image = models.ImageField(upload_to='Image/User/', null=True, blank=True)
 
 
     objects = UserManager()

@@ -14,29 +14,43 @@ from rest_framework.authtoken.models import Token
 @api_view(['POST'])
 @permission_classes((AllowAny, ))
 def join(request):
+
     try :
         user = User.objects.create_user(username=request.POST['username'], password=request.POST['password'], email = request.POST['email'])
         print(user)
         user.save()
         token = Token.objects.create(user=user)
-        return Response({"Token":token.key})
     except :
-        return JsonResponse({'msg':'Duplicate Email'})
-
+        try :
+            user = User.objects.get(username = request.POST['username'])
+            print("Already User")
+            token = Token.objects.get(user=user)
+        except :
+            return Response({'msg':'Please check the Personal InFo'})
     
+    return Response({"Token":token.key})
 
 
 @api_view(['POST'])
 @permission_classes((IsAuthenticated, ))
 def edit_username(request):
-    #print(request.POST['newname'])
     user = User.objects.get(username = request.user.username)
-    #print(user)
     user.username = request.POST['newname']
     user.save()
-    
     context = {'msg':'Username Changed Success'}
     return JsonResponse(context)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated, ))
+def edit_profile(request):
+    print(request.user.username)
+    user = User.objects.get(username = request.user.username)
+    user.profile_image = request.FILES['newimage']
+    user.save()
+    context = {'msg':'User Profile Image Changed Success'}
+    return JsonResponse(context)
+
 
 @api_view(['GET'])
 @permission_classes((IsAuthenticated, ))
