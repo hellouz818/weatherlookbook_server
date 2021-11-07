@@ -54,3 +54,32 @@ def weather(request):
     context = {showtype:temp, "date":l}
     print(context)
     return JsonResponse(context)
+
+def weather_info(request):
+    html = requests.get('https://search.naver.com/search.naver?query=%EB%82%A0%EC%94%A8#lnb')
+    #pprint(html.text)
+
+    soup = BeautifulSoup(html.text, 'html.parser')
+    #print(soup)
+    now_temp = soup.find('div', {'class': 'temperature_text'})
+    lowest = soup.find('span', {'class': 'lowest'}).text
+    highest = soup.find('span', {'class': 'highest'}).text
+   
+    now_temp = now_temp.get_text()
+    now_temp = now_temp[6:]
+    now_temp = now_temp[:-2]
+
+    #highest = highest.get_text()
+    highest = highest[4:]
+    highest = highest[:-1]
+
+    #lowest = lowest.get_text()
+    lowest = lowest[4:]
+    lowest = lowest[:-1]
+
+    context = {
+        "max":highest,
+        "min":lowest,
+        "avg":now_temp
+    }
+    return JsonResponse(context)
