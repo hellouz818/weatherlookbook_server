@@ -1,10 +1,11 @@
 from django.http.response import JsonResponse, HttpResponse
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-from rest_framework_jwt.views import ObtainJSONWebToken
-from rest_framework_jwt.views import obtain_jwt_token
+#from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+#from rest_framework_jwt.views import ObtainJSONWebToken
+#from rest_framework_jwt.views import obtain_jwt_token
 
 from .models import User
 from boardapp.models import Board
@@ -14,7 +15,6 @@ from rest_framework.authtoken.models import Token
 @api_view(['POST'])
 @permission_classes((AllowAny, ))
 def join(request):
-
     try :
         user = User.objects.create_user(username=request.POST['username'], password=request.POST['password'], email = request.POST['email'])
         print(user)
@@ -74,30 +74,15 @@ def myboard(request):
     return JsonResponse(l, safe=False)
 
 
-@api_view(['GET'])
+@api_view(['POST'])
+@csrf_exempt
 @permission_classes((IsAuthenticated, ))
-def mylike(request):
-    print(request.user.uid)
-    user = request.user
-    board = Board.objects.all()
-    """
-    print(board)
-    for s in board:
-        print(s.like.all())
-
-    queryset = user.board_like.filter()
-    print(queryset)
-    #Board.objects.filter(boardapp_boardlike.user_id = request.user.uid)
-
-    """
-    context = {'msg':'good'}
-
-    return JsonResponse(context, safe=False)
-
-
 def deleteaccount(request):
-    context = {'msg':'good'}
+    user = User.objects.get(username=request.user)
+    user.delete()
+    
+    context = {'msg':str(user)+' Delete Success'}
     return JsonResponse(context)
 
 
-    
+

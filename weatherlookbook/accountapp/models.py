@@ -7,9 +7,6 @@ from django.utils.translation import ugettext_lazy as _
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
-        """
-        주어진 이메일, 닉네임, 비밀번호 등 개인정보로 User 인스턴스 생성
-        """
         if not email:
             raise ValueError(_('Users must have an email address'))
 
@@ -20,16 +17,13 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email,password, **extra_fields) :
-        """
-        주어진 이메일, 닉네임, 비밀번호 등 개인정보로 User 인스턴스 생성
-        단, 최상위 사용자이므로 권한을 부여한다. 
-        """
         user = self.model(email=email, **extra_fields)
 
         user.is_superuser = True
         user.set_password(password)
         user.save(using=self._db)
         return user
+
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -72,15 +66,3 @@ class User(AbstractBaseUser, PermissionsMixin):
     def is_staff(self):
         return self.is_superuser
 
-
-
-
-"""
-# Create your models here.
-class User(AbstractUser):
-    uid = models.AutoField(primary_key=True)
-    #username = models.CharField(max_length=100)
-    email = models.EmailField(null=False)
-    password = models.CharField(max_length=100)
-    profile_image = models.ImageField(null=True)
-"""
