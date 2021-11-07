@@ -16,13 +16,13 @@ from rest_framework.authtoken.models import Token
 @permission_classes((AllowAny, ))
 def join(request):
     try :
-        user = User.objects.create_user(username=request.POST['username'], password=request.POST['password'], email = request.POST['email'])
+        user = User.objects.create_user(username=request.data.get("username"), password=request.data.get("password"), email = request.data.get("email"))
         print(user)
         user.save()
         token = Token.objects.create(user=user)
     except :
         try :
-            user = User.objects.get(username = request.POST['username'])
+            user = User.objects.get(username = request.data.get('username'))
             print("Already User")
             token = Token.objects.get(user=user)
         except :
@@ -35,7 +35,8 @@ def join(request):
 @permission_classes((IsAuthenticated, ))
 def edit_username(request):
     user = User.objects.get(username = request.user.username)
-    user.username = request.POST['newname']
+    user.username = request.data.get("newname")
+    #user.username = request.POST['newname']
     user.save()
     context = {'msg':'Username Changed Success'}
     return JsonResponse(context)

@@ -11,7 +11,6 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 @api_view(['POST'])
 @permission_classes((IsAuthenticated, ))
-@authentication_classes((JSONWebTokenAuthentication,))
 @csrf_exempt 
 def like_board(request, board_bid):
     board = get_object_or_404(Board, bid=board_bid)
