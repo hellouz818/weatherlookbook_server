@@ -12,5 +12,5 @@ urlpatterns = [
     path('edit_username/', views.edit_username, name='edit_username'),
     path('delete_account/', views.deleteaccount, name='deleteaccount'),
     path('myboard/', views.myboard, name='myboard'),
-    path('mylike.', views.mylike, name='mylike'),
+    path('mylike/', views.mylike, name='mylike'),
 ]
