@@ -1,7 +1,6 @@
 myvenv
 secrets.json
 Image
-crawlingapp/views.py
 # Created by https://www.toptal.com/developers/gitignore/api/django,python,venv
 # Edit at https://www.toptal.com/developers/gitignore?templates=django,python,venv
 
@@ -14,7 +13,7 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 media
-crawlinapp
+
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
 # in your Git repository. Update and uncomment the following line accordingly.
