@@ -164,3 +164,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # 각 media file에 대한 URL prefix
 MEDIA_URL = '/media/'
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:8000',
+    'http://localhost:8081',
+    'http://127.0.0.1:8000',
+    'http://127.0.0.1:8081',
+    'http://192.168.239.235:8000',
+    'http://192.168.239.235:8081',
+    'http://223.39.251.129:8081',
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ORIGIN_ALLOW_ALL=True
