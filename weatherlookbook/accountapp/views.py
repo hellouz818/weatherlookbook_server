@@ -33,24 +33,21 @@ def join(request):
 
 @api_view(['POST'])
 @permission_classes((IsAuthenticated, ))
-def edit_username(request):
-    user = User.objects.get(username = request.user.username)
-    user.username = request.data.get("newname")
-    #user.username = request.POST['newname']
-    user.save()
-    context = {'msg':'Username Changed Success'}
-    return JsonResponse(context)
-
-
-@api_view(['POST'])
-@permission_classes((IsAuthenticated, ))
 def edit_profile(request):
-    print(request.user.username)
     user = User.objects.get(username = request.user.username)
-    user.profile_image = request.FILES['newimage']
-    user.save()
-    context = {'msg':'User Profile Image Changed Success'}
+    if request.data.get("newname") is not None:
+        user.username = request.data.get("newname")
+        user.save() 
+        
+    if request.FILES.get('newimage') is not None:
+        user.profile_image = request.FILES.get('newimage')
+        user.save()
+    
+    context = {'msg':'User Profile Changed Success'}
+    
     return JsonResponse(context)
+
+
 
 
 @api_view(['GET'])
@@ -74,6 +71,27 @@ def myboard(request):
     
     return JsonResponse(l, safe=False)
 
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+def mylike(request):
+    print(request.user.uid)
+    board = Board.objects.filter(user_id = request.user.uid)
+    print(board)
+    l = []
+    for b in board:
+        print(b.bid)
+        print(b.image)
+        
+        context = {
+            "bid":b.bid,
+            "image":str(b.image)
+        }
+        l.append(context)
+
+    print(l)
+    
+    return JsonResponse(l, safe=False)
 
 @api_view(['POST'])
 @csrf_exempt

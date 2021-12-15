@@ -6,7 +6,6 @@ urlpatterns = [
     # Account
     path("join/", views.join, name="join"), # 회원가입 및 로그인
     # Setting page
-    path('edit_username/', views.edit_username, name='edit_username'),
     path('edit_profile/', views.edit_profile, name='edit_profile'),
     path('delete_account/', views.deleteaccount, name='deleteaccount'),
     path('myboard/', views.myboard, name='myboard'),
