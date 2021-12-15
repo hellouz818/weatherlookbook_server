@@ -28,7 +28,7 @@ def join(request):
         except :
             return Response({'msg':'Please check the Personal InFo'})
     
-    return Response({"Token":token.key})
+    return Response({"Token":token.key, "uid":user.uid})
 
 
 @api_view(['POST'])

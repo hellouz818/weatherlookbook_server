@@ -13,6 +13,6 @@ class BoardViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
-
+        
     filter_backends = [SearchFilter]
     search_fields = ['content', 'date']

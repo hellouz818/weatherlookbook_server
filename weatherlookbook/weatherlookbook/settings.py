@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'accountapp',
     'boardapp',
     'likeapp',
+    'commentapp',
 ]
 
 AUTH_USER_MODEL = 'accountapp.User'
