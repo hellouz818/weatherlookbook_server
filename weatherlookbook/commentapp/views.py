@@ -13,12 +13,10 @@ from .models import Comment
 @permission_classes((IsAuthenticated, ))
 @csrf_exempt
 def commentcreate(request, bid):
-    if request.method == 'POST':
-        comment = Comment()
-        comment.user = request.user
-        comment.board = Board.objects.get(bid = bid)
-        comment.text = request.POST['text']
-        comment.save()
-        return JsonResponse({"msg":"commentcreate success"})
-    else :
-        return JsonResponse({"msg":"comment create error"})
+    comment = Comment()
+    comment.user = request.user
+    comment.board = Board.objects.get(bid = bid)
+    comment.text = request.POST['text']
+    comment.save()
+    return JsonResponse({"msg":"commentcreate success"})
+    
